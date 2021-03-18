@@ -6,7 +6,7 @@ import urllib.request
 driver = webdriver.Chrome()
 driver.get("https://www.google.co.kr/imghp?hl=ko&ogbl")
 elem = driver.find_element_by_name("q")
-elem.send_keys("b737ng")
+elem.send_keys("b737ng")    # search word
 elem.send_keys(Keys.RETURN)
 
 SCROLL_PAUSE_TIME = 1.5
