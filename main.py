@@ -3,16 +3,17 @@ from selenium.webdriver.common.keys import Keys
 import time
 import urllib.request
 
-driver = webdriver.Chrome()
+binary = 'c:/chromedriver/chromedriver.exe'
+driver = webdriver.Chrome(binary)
 driver.get("https://www.google.co.kr/imghp?hl=ko&ogbl")
 elem = driver.find_element_by_name("q")
-elem.send_keys("a220")    # search word
-elem.send_keys(Keys.RETURN)
+elem.send_keys("python")    # search word
+elem.submit()
 
 SCROLL_PAUSE_TIME = 1.5
 # Get scroll height
 last_height = driver.execute_script("return document.body.scrollHeight")
-while True:
+while True:   # Repeat until break
     # Scroll down to bottom
     driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
     # Wait to load page
@@ -30,7 +31,7 @@ images = driver.find_elements_by_css_selector('.rg_i.Q4LuWd')
 count = 1
 for image in images:
     try:
-        image.click()
+        image.click()   # To get more quality images
         time.sleep(2)
         imgUrl = driver.find_element_by_xpath('/html/body/div[2]/c-wiz/div[3]/div[2]/div[3]/div/div/div[3]/div[2]/c-wiz/div/div[1]/div[1]/div/div[2]/a/img').get_attribute("src")
         urllib.request.urlretrieve(imgUrl, str(count) + ".jpg")
