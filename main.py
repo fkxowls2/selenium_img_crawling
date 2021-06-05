@@ -6,7 +6,7 @@ import urllib.request
 driver = webdriver.Chrome()
 driver.get("https://www.google.co.kr/imghp?hl=ko&ogbl")
 elem = driver.find_element_by_name("q")
-elem.send_keys("b737ng")    # search word
+elem.send_keys("a220")    # search word
 elem.send_keys(Keys.RETURN)
 
 SCROLL_PAUSE_TIME = 1.5
@@ -39,11 +39,3 @@ for image in images:
         pass
 
 driver.close()
-
-# assert "Python" in driver.title
-# elem = driver.find_element_by_name("q")
-# elem.clear()
-# elem.send_keys("pycon")
-# elem.send_keys(Keys.RETURN)
-# assert "No results found." not in driver.page_source
-# driver.close()
