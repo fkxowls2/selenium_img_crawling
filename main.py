@@ -1,16 +1,23 @@
 from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-import time
+from selenium.webdriver.chrome.options import Options
+from webdriver_manager.chrome import ChromeDriverManager
 import urllib.request
 
-binary = 'c:/chromedriver/chromedriver.exe'
-driver = webdriver.Chrome(binary)
+import time
+from tqdm import tqdm
+
+
+options = Options()
+options.add_experimental_option("detach", True)  # 브라우저 바로 닫힘 방지
+options.add_experimental_option("excludeSwitches", ["enable-logging"])  # 불필요한 메시지 제거
+
+driver = webdriver.Chrome(ChromeDriverManager(path='DRIVER').install(), options=options)
 driver.get("https://www.google.co.kr/imghp?hl=ko&ogbl")
 elem = driver.find_element_by_name("q")
 elem.send_keys("python")    # search word
 elem.submit()
 
-SCROLL_PAUSE_TIME = 1.5
+SCROLL_PAUSE_TIME = 2
 # Get scroll height
 last_height = driver.execute_script("return document.body.scrollHeight")
 while True:   # Repeat until break
@@ -29,12 +36,12 @@ while True:   # Repeat until break
 
 images = driver.find_elements_by_css_selector('.rg_i.Q4LuWd')
 count = 1
-for image in images:
+for image in tqdm(images):
     try:
         image.click()   # To get more quality images
-        time.sleep(2)
-        imgUrl = driver.find_element_by_xpath('/html/body/div[2]/c-wiz/div[3]/div[2]/div[3]/div/div/div[3]/div[2]/c-wiz/div/div[1]/div[1]/div/div[2]/a/img').get_attribute("src")
-        urllib.request.urlretrieve(imgUrl, str(count) + ".jpg")
+        time.sleep(1)
+        imgUrl = driver.find_element_by_css_selector('img.n3VNCb').get_attribute("src")
+        urllib.request.urlretrieve(imgUrl, str(count)+".jpg")
         count = count + 1
     except:
         pass
