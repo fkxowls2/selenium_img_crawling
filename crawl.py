@@ -19,9 +19,9 @@ class CrawlingManager():
             driver = webdriver.Chrome(ChromeDriverManager(path='DRIVER').install(), options=options)
             self.driver = driver
         except:
-            print('Chrome이 설치되어 있는지 확인해주세요.')
+            print('Chrome이 설치되어 있는지 확인해주세요!')
     
-    def img_crawling(self, keyword='python', save_path='.'):
+    def img_crawling(self, keyword='python'):
         self.driver.get("https://www.google.co.kr/imghp?hl=ko&ogbl")
         elem = self.driver.find_element_by_name("q")
         elem.send_keys(keyword)    # search word
@@ -46,24 +46,33 @@ class CrawlingManager():
 
         images = self.driver.find_elements_by_css_selector('.rg_i.Q4LuWd')
         
-        idx = 1
-        for image in tqdm(images):
-            try:
-                image.click()   # To get more quality images
-                time.sleep(1)
-                imgUrl = self.driver.find_element_by_css_selector('.n3VNCb.KAlRDb').get_attribute("src")
-                urllib.request.urlretrieve(imgUrl, f'{save_path}/{str(idx)}.jpg')
-                idx += 1
-            except:
-                pass
+        return images
+    
+    def img_save(self, idx, image, save_path='.'):
+        try:
+            image.click()   # To get more quality images
+            time.sleep(1)
+            imgUrl = self.driver.find_element_by_css_selector('.n3VNCb.KAlRDb').get_attribute("src")
+            urllib.request.urlretrieve(imgUrl, f'{save_path}/{str(idx)}.jpg')
+        except:
+            pass
 
+    def driver_close(self):    
         self.driver.close()
+        
+    def driver_quit(self):    
+        self.driver.quit()
 
 
 def main():
     # dir_path = '.'
     cm = CrawlingManager()
-    cm.img_crawling(keyword='dog')
+    images = cm.img_crawling(keyword='dog')
+    idx = 1
+    for i in tqdm(images):
+        cm.img_save(idx, i)
+        idx += 1
+    cm.driver_close()
 
 
 
