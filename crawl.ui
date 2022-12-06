@@ -29,16 +29,6 @@
     <string>저장 경로 설정</string>
    </property>
   </widget>
-  <widget class="QTextBrowser" name="txtWindow1">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>30</y>
-     <width>451</width>
-     <height>31</height>
-    </rect>
-   </property>
-  </widget>
   <widget class="QTextEdit" name="txtEdit">
    <property name="geometry">
     <rect>
@@ -72,7 +62,7 @@ p, li { white-space: pre-wrap; }
     <string>검색어 입력</string>
    </property>
   </widget>
-  <widget class="QTextBrowser" name="txtWindow3">
+  <widget class="QTextBrowser" name="txtWindow">
    <property name="geometry">
     <rect>
      <x>20</x>
@@ -95,17 +85,7 @@ p, li { white-space: pre-wrap; }
     <string>시작</string>
    </property>
   </widget>
-  <widget class="QTextBrowser" name="txtWindow2">
-   <property name="geometry">
-    <rect>
-     <x>80</x>
-     <y>150</y>
-     <width>391</width>
-     <height>31</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label">
+  <widget class="QLabel" name="label2">
    <property name="geometry">
     <rect>
      <x>20</x>
@@ -129,6 +109,38 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="value">
     <number>0</number>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label1">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>30</y>
+     <width>451</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255,255,255);</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label3">
+   <property name="geometry">
+    <rect>
+     <x>80</x>
+     <y>150</y>
+     <width>391</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255,255,255);</string>
+   </property>
+   <property name="text">
+    <string/>
    </property>
   </widget>
  </widget>

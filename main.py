@@ -13,6 +13,7 @@ form_class = uic.loadUiType("crawl.ui")[0]
 class Worker(QThread):
     num_image = pyqtSignal(int)
     num_idx = pyqtSignal(int)
+    win_txt = pyqtSignal(str)
     def __init__(self, parent):
         super().__init__()
         self.parent = parent
@@ -21,18 +22,18 @@ class Worker(QThread):
         try:
             cm = CrawlingManager()
         except:
-            pass
-        #     self.parent.txtWindow3.setPlainText('Chrome이 설치되어 있는지 확인해주세요!')
+            self.win_txt.emit('Chrome이 설치되어 있는지 확인해주세요!')
+            
         images = cm.img_crawling(keyword=self.parent.keyword)
-        # self.parent.progressBar.setRange(1, len(images))
         self.num_image.emit(len(images))
+        
         idx = 1
         for image in images:
             cm.img_save(idx, image, save_path=self.parent.folder_path)
-            # self.parent.progressBar.setValue(idx)
             self.num_idx.emit(idx)
             idx += 1
-        # self.parent.txtWindow3.setPlainText('이미지 수집이 완료되었습니다.')
+            
+        self.win_txt.emit('이미지 수집이 완료되었습니다.')
         cm.driver_close()
         self.quit()
         self.wait(1000)
@@ -53,31 +54,35 @@ class WindowClass(QMainWindow, form_class):
         self.w = Worker(self)
         self.w.num_image.connect(self.set_progress_bar)
         self.w.num_idx.connect(self.set_progress_bar_value)
+        self.w.win_txt.connect(self.set_text)
         
     def path_btn_func(self):
         self.folder_path = QFileDialog.getExistingDirectory(self)
-        self.txtWindow1.setPlainText(self.folder_path)
+        self.label1.setText(self.folder_path)
 
     def keyword_btn_func(self):
         self.keyword = self.txtEdit.toPlainText()
-        self.txtWindow2.setPlainText(self.keyword)
+        self.label3.setText(self.keyword)
         
     def start_btn_func(self):
-        self.txtWindow2.setPlainText(self.keyword)
-        self.txtWindow3.setPlainText('이미지 수집 중입니다. 인터넷 창을 닫지 말아주세요.')
+        self.label3.setText(self.keyword)
+        self.txtWindow.setPlainText('이미지 수집 중입니다. 인터넷 창을 닫지 말아주세요.')
         # self.w = Worker(self)
         self.w.start()
-        self.txtWindow3.setPlainText('이미지 수집이 완료되었습니다.')
     
-    @pyqtSlot(int)    
+    @pyqtSlot(int)
     def set_progress_bar(self, num):
         self.progressBar.setRange(1, num)
         
-    @pyqtSlot(int)    
+    @pyqtSlot(int)
     def set_progress_bar_value(self, num):
         self.progressBar.setValue(num)
         
-
+    @pyqtSlot(str)
+    def set_text(self, msg):
+        self.txtWindow.setPlainText(msg)
+        
+        
 
 if __name__ == "__main__":
     #QApplication : 프로그램을 실행시켜주는 클래스
