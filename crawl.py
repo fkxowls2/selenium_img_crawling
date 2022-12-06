@@ -46,7 +46,6 @@ class CrawlingManager():
 
         images = self.driver.find_elements_by_css_selector('.rg_i.Q4LuWd')
         
-        time.sleep(2)
         idx = 1
         for image in tqdm(images):
             try:
