@@ -1,1 +1,16 @@
 selenium==3.14
+altgraph==0.17.3
+future==0.18.2
+numpy==1.23.3
+pefile==2022.5.30
+pyinstaller==5.4.1
+pyinstaller-hooks-contrib==2022.10
+PyQt5==5.15.7
+PyQt5-Qt5==5.15.2
+PyQt5-sip==12.11.0
+pywin32-ctypes==0.2.0
+soupsieve==2.3.2.post1
+wincertstore==0.2
+tqdm==4.64.1
+urllib3==1.26.13
+webdriver-manager==3.8.5

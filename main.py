@@ -51,10 +51,10 @@ class WindowClass(QMainWindow, form_class):
         self.folder_path = '.'
         self.keyword = self.txtEdit.toPlainText()
         
-        self.w = Worker(self)
-        self.w.num_image.connect(self.set_progress_bar)
-        self.w.num_idx.connect(self.set_progress_bar_value)
-        self.w.win_txt.connect(self.set_text)
+        # self.w = Worker(self)
+        # self.w.num_image.connect(self.set_progress_bar)
+        # self.w.num_idx.connect(self.set_progress_bar_value)
+        # self.w.win_txt.connect(self.set_text)
         
     def path_btn_func(self):
         self.folder_path = QFileDialog.getExistingDirectory(self)
@@ -66,8 +66,11 @@ class WindowClass(QMainWindow, form_class):
         
     def start_btn_func(self):
         self.label3.setText(self.keyword)
-        self.txtWindow.setPlainText('이미지 수집 중입니다. 인터넷 창을 닫지 말아주세요.')
-        # self.w = Worker(self)
+        self.txtWindow.setPlainText('이미지 수집 중입니다. 인터넷 창을 내리거나, 닫지 말아주세요.')
+        self.w = Worker(self)
+        self.w.num_image.connect(self.set_progress_bar)
+        self.w.num_idx.connect(self.set_progress_bar_value)
+        self.w.win_txt.connect(self.set_text)
         self.w.start()
     
     @pyqtSlot(int)
